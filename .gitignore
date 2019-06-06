@@ -16,3 +16,6 @@ node_modules/
 
 # built files
 public/
+
+# firebase temporary files
+.firebase
