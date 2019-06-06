@@ -51,6 +51,8 @@ const Root = styled.span<{
     lineThrough ? "line-through" : "auto"};
   user-select: ${({ theme, nonselectable }) =>
     theme.isNonselectable || nonselectable ? "none" : "auto"};
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
 `;
 
 function getTagName(
