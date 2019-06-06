@@ -5,6 +5,7 @@ import { Props as CheckboxLabelProps } from "./CheckboxLabel";
 
 interface Props extends React.Attributes {
   checked?: boolean;
+  disable?: boolean;
   label?: React.ReactElement<CheckboxLabelProps>;
   onChange?: (e: React.SyntheticEvent, isChecked: boolean) => void;
   className?: string;
@@ -12,6 +13,7 @@ interface Props extends React.Attributes {
 
 function Checkbox({
   checked = false,
+  disable = false,
   label,
   onChange = () => {},
   ...props
@@ -28,20 +30,27 @@ function Checkbox({
 
   return (
     <Root
-      onClick={e => {
-        toggleChecked(e);
+      onClick={
+        disable
+          ? undefined
+          : e => {
+              toggleChecked(e);
 
-        ref.current!.focus();
-      }}
+              ref.current!.focus();
+            }
+      }
       {...props}
     >
       <Input
         ref={ref}
-        tabIndex={0}
-        onKeyDown={e => e.keyCode === 32 && toggleChecked(e)}
+        tabIndex={disable ? undefined : 0}
+        onKeyDown={
+          disable ? undefined : e => e.keyCode === 32 && toggleChecked(e)
+        }
         checked={isChecked}
+        disable={disable}
       >
-        <Indicator checked={isChecked} />
+        <Indicator checked={isChecked} disable={disable} />
       </Input>
 
       {label ? <Label>{label}</Label> : null}
@@ -59,14 +68,18 @@ const Root = styled.span`
   cursor: pointer;
 `;
 
-const Input = styled.span<{ checked: boolean }>`
+const Input = styled.span<{ checked: boolean; disable: boolean }>`
   display: inline-block;
   position: relative;
   align-self: stretch;
   justify-self: stretch;
-  border: ${({ checked }) => (checked ? "none" : "1px #dfe4ea solid")};
-  border-radius: 3px;
-  background-color: ${({ checked }) => (checked ? "#1e90ff" : "transparent")};
+  border-color: ${({ checked, disable }) =>
+    disable ? "#ced6e0" : checked ? "transparent" : "#ced6e0"};
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  background-color: ${({ checked, disable }) =>
+    disable ? "#f1f2f6" : checked ? "#1e90ff" : "#fff"};
   transition: background-color 125ms ease-in-out 0ms,
     box-shadow 125ms ease-in-out 0ms;
 
@@ -75,13 +88,20 @@ const Input = styled.span<{ checked: boolean }>`
   }
 `;
 
-const Indicator = styled(CheckIcon)<{ checked: boolean }>`
+const Indicator = styled(CheckIcon)<{ checked: boolean; disable: boolean }>`
   position: absolute;
   top: 1px;
   left: 1px;
   width: 20px;
   height: 20px;
-  fill: ${({ checked }) => (checked ? "#ffffff" : "#dfe4ea")};
+  fill: ${({ checked, disable }) =>
+    disable
+      ? checked
+        ? "#ced6e0"
+        : "transparent"
+      : checked
+      ? "#fff"
+      : "transparent"};
 `;
 
 const Label = styled.div`

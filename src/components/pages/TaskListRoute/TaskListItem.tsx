@@ -24,6 +24,7 @@ function TaskListItem({ task, updating, ...props }: Props): React.ReactElement {
           taskListBloc.setChecked({ task, isDone: isChecked })
         }
         checked={task.isDone}
+        disable={updating}
         label={
           <CheckboxLabel>
             <Text lineThrough={task.isDone}>{task.text}</Text>
