@@ -37,7 +37,7 @@ jobs:
           at: ~/repo
       - run:
           name: Build
-          command: npm run build
+          command: npm run build -- --mode production
       - persist_to_workspace:
           root: ~/repo
           paths:
