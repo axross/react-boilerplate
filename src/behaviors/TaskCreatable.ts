@@ -1,6 +1,5 @@
 import AuthenticationSession from "../entities/AuthenticationSession";
 import Task from "../entities/Task";
-import TaskId from "../entities/TaskId";
 
 interface TaskCreatable {
   createTask(args: {
