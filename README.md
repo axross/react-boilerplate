@@ -23,13 +23,13 @@ A complete example of React application considered application architecture so t
 
 (Fork and) clone this repository, `npm i` then:
 
-### Start development server
+### Starting development server
 
 ```
 $ npm run serve
 ```
 
-### Build files
+### Building files
 
 ```
 $ npm run build
