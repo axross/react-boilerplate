@@ -17,7 +17,7 @@ A complete example of React application considered application architecture so t
 - [ ] Infinit scrolling
 - [x] Session token encyrption
 - [ ] Code splitting
-- [ ] CI example configuration
+- [x] CI example configuration
 
 ## Getting Started
 
