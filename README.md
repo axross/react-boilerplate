@@ -2,6 +2,10 @@
 
 A complete example of React application considered application architecture so that it scales
 
+## Demo
+
+[https://clean-react.web.app](https://clean-react.web.app)
+
 ## What Included / To-Do
 
 - [x] Foundation
@@ -19,13 +23,13 @@ A complete example of React application considered application architecture so t
 
 (Fork and) clone this repository, `npm i` then:
 
-### Start development server
+### Starting development server
 
 ```
 $ npm run serve
 ```
 
-### Build files
+### Building files
 
 ```
 $ npm run build
