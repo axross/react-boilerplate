@@ -33,12 +33,12 @@ function TaskListItem({ task, updating, ...props }: Props): React.ReactElement {
 
       {updating ? <LoadingSpinner /> : null}
 
-      <__Button
+      <Button
         color={ButtonColor.secondary}
         onClick={() => taskListBloc.delete(task)}
       >
         <Text>Delete</Text>
-      </__Button>
+      </Button>
     </Root>
   );
 }
@@ -51,14 +51,6 @@ const Root = styled.li`
   column-gap: 32px;
   padding: 8px 0;
   border-bottom: 1px #dfe4ea solid;
-`;
-
-const _Button = styled(Button)`
-  padding: 16px 24px;
-`;
-
-const __Button = styled(_Button)`
-  padding: 20px 24px;
 `;
 
 export default TaskListItem;
