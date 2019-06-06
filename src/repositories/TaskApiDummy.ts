@@ -1,6 +1,4 @@
-import TaskCreatable, {
-  CreatingTaskReference
-} from "../behaviors/TaskCreatable";
+import TaskCreatable from "../behaviors/TaskCreatable";
 import TaskDeletable, { TaskDeleteFailure } from "../behaviors/TaskDeletable";
 import TaskListable from "../behaviors/TaskListable";
 import TaskUpdatable, { TaskUpdateFailure } from "../behaviors/TaskUpdtable";
@@ -30,16 +28,14 @@ class TaskApiDummy
   private tasks: Task[];
 
   createTask({
-    temporaryId,
     text,
     isDone
   }: {
-    temporaryId: TaskId;
     text: string;
     isDone: boolean;
     session: AuthenticationSession;
-  }): CreatingTaskReference {
-    const payload = new Promise<Task>(resolve =>
+  }): Promise<Task> {
+    return new Promise<Task>(resolve =>
       setTimeout(() => {
         const task = ApiDummyTask.create({ text, isDone });
 
@@ -48,8 +44,6 @@ class TaskApiDummy
         resolve(task);
       }, 750)
     );
-
-    return new ApiDummyCreatingTaskReference({ temporaryId, payload });
   }
 
   async deleteTask({
@@ -149,7 +143,5 @@ class ApiDummyTaskId extends TaskId {
     return this.value.toString();
   }
 }
-
-class ApiDummyCreatingTaskReference extends CreatingTaskReference {}
 
 export default TaskApiDummy;

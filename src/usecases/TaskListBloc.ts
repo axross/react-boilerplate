@@ -67,40 +67,41 @@ class TaskListBloc {
   }
 
   async addByText(text: string): Promise<void> {
-    const task = UncreatedTask.create({ text, isDone: false });
+    const temporaryTask = UncreatedTask.create({ text, isDone: false });
 
-    this.$updatingTaskIds.next(this.$updatingTaskIds.value.add(task.id));
-    this.$tasks.next([...this.$tasks.value, task]);
-
-    const creatingReference = this.taskCreatable.createTask({
-      temporaryId: task.id,
-      text: task.text,
-      isDone: task.isDone,
-      session: this.session
-    });
+    this.$updatingTaskIds.next(
+      this.$updatingTaskIds.value.add(temporaryTask.id)
+    );
+    this.$tasks.next([...this.$tasks.value, temporaryTask]);
 
     let createdTask: Task;
 
     try {
-      createdTask = await creatingReference.payload;
+      createdTask = await this.taskCreatable.createTask({
+        text: temporaryTask.text,
+        isDone: temporaryTask.isDone,
+        session: this.session
+      });
     } catch (err) {
       if (err instanceof TaskCreateFailure) {
         // delete the temporarily created task to rollback
         this.$tasks.next(
-          this.$tasks.value.filter(t => t.id !== creatingReference.temporaryId)
+          this.$tasks.value.filter(t => t.id !== temporaryTask.id)
         );
-        this.$updatingTaskIds.next(this.$updatingTaskIds.value.remove(task.id));
+        this.$updatingTaskIds.next(
+          this.$updatingTaskIds.value.remove(temporaryTask.id)
+        );
       }
 
       return;
     }
 
     this.$tasks.next(
-      this.$tasks.value.map(t =>
-        t.id === creatingReference.temporaryId ? createdTask : t
-      )
+      this.$tasks.value.map(t => (t.id === temporaryTask.id ? createdTask : t))
     );
-    this.$updatingTaskIds.next(this.$updatingTaskIds.value.remove(task.id));
+    this.$updatingTaskIds.next(
+      this.$updatingTaskIds.value.remove(temporaryTask.id)
+    );
   }
 
   async delete(task: Task): Promise<void> {
