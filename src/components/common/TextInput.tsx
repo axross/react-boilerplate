@@ -24,8 +24,8 @@ const TextInput = React.forwardRef<HTMLInputElement, Props>(
 );
 
 const Input = styled.input`
-  width: 100%;
   box-sizing: border-box;
+  width: 256px;
   height: 100%;
   padding: 8px 8px;
   border: 1px #dfe4ea solid;

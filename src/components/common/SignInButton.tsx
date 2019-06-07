@@ -18,7 +18,7 @@ function SignInButton(props: Props): React.ReactElement {
     >
       {snapshot => (
         <Button
-          disabled={snapshot.data}
+          disable={snapshot.data}
           onClick={() => authenticationBloc.signIn()}
           {...props}
         >
