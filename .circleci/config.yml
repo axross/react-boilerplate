@@ -50,6 +50,26 @@ jobs:
       - run:
           name: Deploy to production environment
           command: npx firebase-tools deploy --project $FIREBASE_PROJECT_ID --token $FIREBASE_TOKEN --only hosting
+  build-storybook:
+    <<: *general_options
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Build storybook
+          command: $(npm bin)/build-storybook -o public-storybook
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+  deploy-storybook:
+    <<: *general_options
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Deploy storybook
+          command: npx firebase-tools deploy --project $FIREBASE_STORYBOOK_PROJECT_ID --token $FIREBASE_TOKEN --only hosting --public public-storybook
 workflows:
   version: 2
   default:
@@ -62,6 +82,15 @@ workflows:
           requires:
             - dry-compile
       - deploy-production:
+          filters:
+            branches:
+              only: master
+          requires:
+            - build
+      - build-storybook:
+          requires:
+            - dry-compile
+      - deploy-storybook:
           filters:
             branches:
               only: master
