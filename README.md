@@ -2,22 +2,28 @@
 
 A complete example of React application considered application architecture so that it scales
 
-## Demo
+## Live Demo
 
 [https://clean-react.web.app](https://clean-react.web.app)
 
 ## What Included / To-Do
 
-- [x] Foundation
-- [ ] Tests
-- [x] Common components
-- [ ] Second page
-- [ ] Real backend example
-- [x] Optimistic UI
-- [ ] Infinit scrolling
-- [x] Session token encyrption
-- [ ] Code splitting
-- [x] CI example configuration
+- Foundation
+  - [x] **Clean architecture with BLoCs pattern**
+  - [x] TypeScript
+  - [ ] Storybook
+  - [ ] Testing
+  - [ ] Common components
+- Real use-cases
+  - [x] CI configuration
+  - [x] Automatic deployment
+  - [ ] Code splitting
+  - [x] Session token encryption
+  - [ ] The second page
+- Implementation technique
+  - [x] Optimistic UI
+  - [ ] Placeholder Loading
+  - [ ] Infinite scrolling paging
 
 ## Getting Started
 
