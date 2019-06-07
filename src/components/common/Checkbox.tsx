@@ -85,6 +85,7 @@ const Input = styled.span<{ checked: boolean; disable: boolean }>`
 
   &:focus {
     box-shadow: #eccc68 0 0 0 3px;
+    outline: none;
   }
 `;
 

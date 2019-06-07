@@ -50,6 +50,10 @@ const Root = styled.span<{ color: ButtonColor }>`
   &:active {
     box-shadow: #eccc68 0 0 0 3px;
   }
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 function createTextTheme(color: ButtonColor): TextTheme {
