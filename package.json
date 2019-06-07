@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "check": "tsc --noEmit --pretty",
-    "serve": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve:app": "webpack-dev-server",
   },
   "author": "Kohei Asai <me@axross.io> (https://axross.io/)",
   "license": "MIT",
