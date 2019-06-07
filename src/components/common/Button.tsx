@@ -4,7 +4,7 @@ import TextThemeContext, { TextTheme } from "./TextThemeContext";
 
 interface Props extends React.Attributes {
   color?: ButtonColor;
-  disabled?: boolean;
+  disable?: boolean;
   onClick?: (e: React.SyntheticEvent) => void;
   className?: string;
   children: React.ReactNode;
@@ -12,7 +12,7 @@ interface Props extends React.Attributes {
 
 function Button({
   color = ButtonColor.primary,
-  disabled,
+  disable,
   onClick,
   ...props
 }: Props): React.ReactElement {
@@ -22,8 +22,8 @@ function Button({
     <TextThemeContext.Provider value={textTheme}>
       <Root
         color={color}
-        onClick={disabled ? undefined : onClick}
-        onKeyDown={e => e.keyCode === 32 && !disabled && onClick && onClick(e)}
+        onClick={disable ? undefined : onClick}
+        onKeyDown={e => e.keyCode === 32 && !disable && onClick && onClick(e)}
         tabIndex={0}
         {...props}
       />
@@ -49,6 +49,10 @@ const Root = styled.span<{ color: ButtonColor }>`
   &:focus,
   &:active {
     box-shadow: #eccc68 0 0 0 3px;
+  }
+
+  &:focus {
+    outline: none;
   }
 `;
 

@@ -4,7 +4,13 @@ A complete example of React application considered application architecture so t
 
 ## Live Demo
 
+### Application
+
 [https://clean-react.web.app](https://clean-react.web.app)
+
+### Storybook
+
+[https://clean-react-storybook.web.app](https://clean-react-storybook.web.app)
 
 ## What Included / To-Do
 
@@ -29,16 +35,16 @@ A complete example of React application considered application architecture so t
 
 (Fork and) clone this repository, `npm i` then:
 
-### Starting development server
+### Starting development server (to develop the application)
 
 ```
-$ npm run serve
+$ npm run serve:app
 ```
 
-### Building files
+### Starting storybook server (to develop components)
 
 ```
-$ npm run build
+$ npm run serve:storybook
 ```
 
 ## License
