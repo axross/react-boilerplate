@@ -95,4 +95,4 @@ workflows:
             branches:
               only: master
           requires:
-            - build
+            - build-storybook
