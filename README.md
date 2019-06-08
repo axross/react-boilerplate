@@ -1,5 +1,7 @@
 # React Boilerplate
 
+[![CircleCI](https://circleci.com/gh/axross/react-boilerplate.svg?style=svg)](https://circleci.com/gh/axross/react-boilerplate)
+
 A complete example of React application considered application architecture so that it scales
 
 ## Live Demo
