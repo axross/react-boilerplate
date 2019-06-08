@@ -17,7 +17,7 @@ A complete example of React application considered application architecture so t
 - Foundation
   - [x] **Clean architecture with BLoCs pattern**
   - [x] TypeScript
-  - [ ] Storybook
+  - [x] Storybook
   - [ ] Testing
   - [x] Common components
 - Real use-cases
