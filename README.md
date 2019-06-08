@@ -35,6 +35,12 @@ A complete example of React application considered application architecture so t
 
 (Fork and) clone this repository, `npm i` then:
 
+```
+$ cp .env.example .env
+```
+
+Then:
+
 ### Starting development server (to develop the application)
 
 ```
