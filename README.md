@@ -19,7 +19,7 @@ A complete example of React application considered application architecture so t
   - [x] TypeScript
   - [ ] Storybook
   - [ ] Testing
-  - [ ] Common components
+  - [x] Common components
 - Real use-cases
   - [x] CI configuration
   - [x] Automatic deployment
