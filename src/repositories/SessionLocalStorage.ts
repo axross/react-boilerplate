@@ -43,6 +43,10 @@ class SessionLocalStorage implements SessionStorable {
       AES.encrypt(session.token, this.passPhrase).toString()
     );
   }
+
+  async deleteSession(): Promise<void> {
+    this.storage.removeItem(this.keyName);
+  }
 }
 
 class LocalStorageAuthenticationSession implements AuthenticationSession {

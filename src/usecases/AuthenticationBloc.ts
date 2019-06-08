@@ -54,6 +54,8 @@ class AuthenticationBloc {
 
     await this.signable.signOut();
 
+    await this.sessionStorable.deleteSession();
+
     this.$session.next(null);
     this.$isProcessing.next(false);
   }
