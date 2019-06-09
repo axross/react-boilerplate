@@ -4,6 +4,7 @@ import TextThemeContext, { TextTheme } from "./TextThemeContext";
 
 interface Props extends React.Attributes {
   headingLevel?: TextHeadingLevel;
+  maxLines?: number;
   lineThrough?: boolean;
   nonselectable?: boolean;
   className?: string;
@@ -12,6 +13,7 @@ interface Props extends React.Attributes {
 
 function Text({
   headingLevel = TextHeadingLevel.none,
+  maxLines = 0,
   lineThrough = false,
   nonselectable = false,
   ...props
@@ -23,6 +25,7 @@ function Text({
   return (
     <Component
       theme={textTheme}
+      maxLines={maxLines}
       lineThrough={lineThrough}
       nonselectable={nonselectable}
       {...props}
@@ -42,6 +45,7 @@ export enum TextHeadingLevel {
 
 const Root = styled.span<{
   theme: TextTheme;
+  maxLines: number;
   lineThrough: boolean;
   nonselectable: boolean;
 }>`
@@ -56,6 +60,21 @@ const Root = styled.span<{
     theme.isNonselectable || nonselectable ? "none" : "auto"};
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;
+
+  ${({ maxLines }) =>
+    maxLines === 0
+      ? ""
+      : `
+    display: box;
+    display: -webkit-box;
+    display: -moz-box;
+    box-orient: vertical;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    line-clamp: ${maxLines};
+    -webkit-line-clamp: ${maxLines};
+    overflow-y: hidden;
+  `}
 `;
 
 function getTagName(
