@@ -1,7 +1,7 @@
 import * as React from "react";
 import AuthenticationBlocContext from "./blocContexts/AuthenticationBlocContext";
 import GlobalStyle from "./GlobalStyle";
-import SignedInScene from "./SignedInScene";
+import SignedInScene from "./scenes/SignedInScene/SignedInScene";
 import SignedOutScene from "./SignedOutScene";
 import SignedScreenSwitcher from "./SignedScreenSwitcher";
 
