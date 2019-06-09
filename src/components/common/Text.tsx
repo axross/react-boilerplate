@@ -45,8 +45,11 @@ const Root = styled.span<{
   lineThrough: boolean;
   nonselectable: boolean;
 }>`
-  font-family: sans-serif;
+  margin: 0;
   color: ${({ theme }) => theme.color || "#2f3542"};
+  font-size: 16px;
+  font-weight: 400;
+  font-family: sans-serif;
   text-decoration: ${({ lineThrough }) =>
     lineThrough ? "line-through" : "auto"};
   user-select: ${({ theme, nonselectable }) =>
