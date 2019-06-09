@@ -1,9 +1,4 @@
-import {
-  boolean,
-  optionsKnob as options,
-  text,
-  withKnobs
-} from "@storybook/addon-knobs";
+import { boolean, radios, text, withKnobs } from "@storybook/addon-knobs";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import Text, { TextHeadingLevel } from "../Text";
@@ -12,7 +7,7 @@ storiesOf("Common/Text", module)
   .addDecorator(withKnobs)
   .add("default", () => (
     <Text
-      headingLevel={options(
+      headingLevel={radios(
         "headingLevel",
         {
           "TextHeadingLevel.none": TextHeadingLevel.none,
@@ -23,8 +18,7 @@ storiesOf("Common/Text", module)
           "TextHeadingLevel.h5": TextHeadingLevel.h5,
           "TextHeadingLevel.h6": TextHeadingLevel.h6
         },
-        TextHeadingLevel.none,
-        { display: "inline-radio" }
+        TextHeadingLevel.none
       )}
       lineThrough={boolean("lineThrough", false)}
       nonselectable={boolean("nonselectable", false)}

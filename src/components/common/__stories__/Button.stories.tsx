@@ -1,10 +1,5 @@
 import { action } from "@storybook/addon-actions";
-import {
-  boolean,
-  optionsKnob as options,
-  withKnobs,
-  text
-} from "@storybook/addon-knobs";
+import { boolean, radios, withKnobs, text } from "@storybook/addon-knobs";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
 import Button, { ButtonColor } from "../Button";
@@ -14,17 +9,14 @@ storiesOf("Common/Button", module)
   .addDecorator(withKnobs)
   .add("default", () => (
     <Button
-      color={options(
+      color={radios(
         "color",
         {
           "ButtonColor.primary": ButtonColor.primary,
           "ButtonColor.accent": ButtonColor.accent,
           "ButtonColor.secondary": ButtonColor.secondary
         },
-        ButtonColor.primary,
-        {
-          display: "inline-radio"
-        }
+        ButtonColor.primary
       )}
       disable={boolean("disable", false)}
       onClick={action("onClick")}
