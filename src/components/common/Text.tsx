@@ -4,30 +4,58 @@ import TextThemeContext, { TextTheme } from "./TextThemeContext";
 
 interface Props extends React.Attributes {
   headingLevel?: TextHeadingLevel;
-  lineThrough?: boolean;
-  nonselectable?: boolean;
+  maxLines?: number;
+  alignment?: TextAlignment;
+  color?: string;
+  selectable?: boolean;
   className?: string;
   children?: string;
 }
 
 function Text({
   headingLevel = TextHeadingLevel.none,
-  lineThrough = false,
-  nonselectable = false,
+  maxLines = 0,
+  alignment,
+  color,
+  selectable,
   ...props
 }: Props): React.ReactElement {
+  const Component = Root.withComponent(getTagName(headingLevel));
   const textTheme: TextTheme = React.useContext(TextThemeContext) || {};
-  const tagName = getTagName(headingLevel);
-  const Component = Root.withComponent(tagName);
+
+  const _alignment = merge(
+    alignment,
+    textTheme.alignment,
+    TextAlignment.default
+  );
+  const _color = merge(color, textTheme.color, "#2f3542");
+  const _selectable = merge(selectable, textTheme.selectable, true);
 
   return (
     <Component
-      theme={textTheme}
-      lineThrough={lineThrough}
-      nonselectable={nonselectable}
+      alignment={_alignment}
+      color={_color}
+      selectable={_selectable}
+      maxLines={maxLines}
       {...props}
     />
   );
+}
+
+function merge<T>(
+  valueFromProps: T | undefined,
+  valueFromTheme: T | undefined,
+  defaultValue: T
+): T {
+  if (valueFromProps !== undefined) {
+    return valueFromProps;
+  }
+
+  if (valueFromTheme !== undefined) {
+    return valueFromTheme;
+  }
+
+  return defaultValue;
 }
 
 export enum TextHeadingLevel {
@@ -40,22 +68,43 @@ export enum TextHeadingLevel {
   none = "none"
 }
 
+export enum TextAlignment {
+  default = "inherit",
+  start = "start",
+  end = "end",
+  center = "center"
+}
+
 const Root = styled.span<{
-  theme: TextTheme;
-  lineThrough: boolean;
-  nonselectable: boolean;
+  alignment: TextAlignment;
+  color: string;
+  selectable: boolean;
+  maxLines: number;
 }>`
   margin: 0;
-  color: ${({ theme }) => theme.color || "#2f3542"};
+  color: ${({ color }) => color};
   font-size: 16px;
   font-weight: 400;
   font-family: sans-serif;
-  text-decoration: ${({ lineThrough }) =>
-    lineThrough ? "line-through" : "auto"};
-  user-select: ${({ theme, nonselectable }) =>
-    theme.isNonselectable || nonselectable ? "none" : "auto"};
+  text-align: ${({ alignment }) => alignment};
+  user-select: ${({ selectable }) => (selectable ? "auto" : "none")};
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;
+
+  ${({ maxLines }) =>
+    maxLines === 0
+      ? ""
+      : `
+    display: box;
+    display: -webkit-box;
+    display: -moz-box;
+    box-orient: vertical;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    line-clamp: ${maxLines};
+    -webkit-line-clamp: ${maxLines};
+    overflow-y: hidden;
+  `}
 `;
 
 function getTagName(

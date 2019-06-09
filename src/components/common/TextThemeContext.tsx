@@ -1,8 +1,10 @@
 import { createContext } from "react";
+import { TextAlignment } from "./Text";
 
 export interface TextTheme {
+  alignment?: TextAlignment;
   color?: string;
-  isNonselectable?: boolean;
+  selectable?: boolean;
 }
 
 const TextThemeContext = createContext<TextTheme>({});
