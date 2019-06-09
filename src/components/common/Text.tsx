@@ -6,7 +6,6 @@ interface Props extends React.Attributes {
   headingLevel?: TextHeadingLevel;
   maxLines?: number;
   color?: string;
-  lineThrough?: boolean;
   selectable?: boolean;
   className?: string;
   children?: string;
@@ -16,7 +15,6 @@ function Text({
   headingLevel = TextHeadingLevel.none,
   maxLines = 0,
   color,
-  lineThrough = false,
   selectable,
   ...props
 }: Props): React.ReactElement {
@@ -31,7 +29,6 @@ function Text({
       color={_color}
       selectable={_selectable}
       maxLines={maxLines}
-      lineThrough={lineThrough}
       {...props}
     />
   );
@@ -67,15 +64,12 @@ const Root = styled.span<{
   color: string;
   selectable: boolean;
   maxLines: number;
-  lineThrough: boolean;
 }>`
   margin: 0;
   color: ${({ color }) => color};
   font-size: 16px;
   font-weight: 400;
   font-family: sans-serif;
-  text-decoration: ${({ lineThrough }) =>
-    lineThrough ? "line-through" : "auto"};
   user-select: ${({ selectable }) => (selectable ? "auto" : "none")};
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;

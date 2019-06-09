@@ -30,8 +30,11 @@ storiesOf("Common/Text", module)
       maxLines={
         boolean("Set `maxLines`", false) ? number("maxLines", 3) : undefined
       }
-      color={boolean("Set `color`", true) ? color("color", "") : undefined}
-      lineThrough={boolean("lineThrough", false)}
+      color={
+        boolean("Set `color`", true)
+          ? color("color", "rgba(0, 0, 0, 1)")
+          : undefined
+      }
       selectable={boolean("selectable", true)}
     >
       {text(

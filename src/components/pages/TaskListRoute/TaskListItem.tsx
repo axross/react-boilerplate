@@ -27,7 +27,7 @@ function TaskListItem({ task, updating, ...props }: Props): React.ReactElement {
         disable={updating}
         label={
           <CheckboxLabel>
-            <Text lineThrough={task.isDone}>{task.text}</Text>
+            <Text>{task.text}</Text>
           </CheckboxLabel>
         }
       />
