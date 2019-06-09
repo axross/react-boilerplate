@@ -5,8 +5,9 @@ import TextThemeContext, { TextTheme } from "./TextThemeContext";
 interface Props extends React.Attributes {
   headingLevel?: TextHeadingLevel;
   maxLines?: number;
+  color?: string;
   lineThrough?: boolean;
-  nonselectable?: boolean;
+  selectable?: boolean;
   className?: string;
   children?: string;
 }
@@ -14,23 +15,42 @@ interface Props extends React.Attributes {
 function Text({
   headingLevel = TextHeadingLevel.none,
   maxLines = 0,
+  color,
   lineThrough = false,
-  nonselectable = false,
+  selectable,
   ...props
 }: Props): React.ReactElement {
+  const Component = Root.withComponent(getTagName(headingLevel));
   const textTheme: TextTheme = React.useContext(TextThemeContext) || {};
-  const tagName = getTagName(headingLevel);
-  const Component = Root.withComponent(tagName);
+
+  const _color = merge(color, textTheme.color, "#2f3542");
+  const _selectable = merge(selectable, textTheme.selectable, true);
 
   return (
     <Component
-      theme={textTheme}
+      color={_color}
+      selectable={_selectable}
       maxLines={maxLines}
       lineThrough={lineThrough}
-      nonselectable={nonselectable}
       {...props}
     />
   );
+}
+
+function merge<T>(
+  valueFromProps: T | undefined,
+  valueFromTheme: T | undefined,
+  defaultValue: T
+): T {
+  if (valueFromProps !== undefined) {
+    return valueFromProps;
+  }
+
+  if (valueFromTheme !== undefined) {
+    return valueFromTheme;
+  }
+
+  return defaultValue;
 }
 
 export enum TextHeadingLevel {
@@ -44,20 +64,19 @@ export enum TextHeadingLevel {
 }
 
 const Root = styled.span<{
-  theme: TextTheme;
+  color: string;
+  selectable: boolean;
   maxLines: number;
   lineThrough: boolean;
-  nonselectable: boolean;
 }>`
   margin: 0;
-  color: ${({ theme }) => theme.color || "#2f3542"};
+  color: ${({ color }) => color};
   font-size: 16px;
   font-weight: 400;
   font-family: sans-serif;
   text-decoration: ${({ lineThrough }) =>
     lineThrough ? "line-through" : "auto"};
-  user-select: ${({ theme, nonselectable }) =>
-    theme.isNonselectable || nonselectable ? "none" : "auto"};
+  user-select: ${({ selectable }) => (selectable ? "auto" : "none")};
   -webkit-font-smoothing: subpixel-antialiased;
   -moz-osx-font-smoothing: auto;
 

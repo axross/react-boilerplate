@@ -1,5 +1,6 @@
 import {
   boolean,
+  color,
   number,
   radios,
   text,
@@ -26,9 +27,12 @@ storiesOf("Common/Text", module)
         },
         TextHeadingLevel.none
       )}
-      maxLines={number("maxLines (0 is no restriction)", 3)}
+      maxLines={
+        boolean("Set `maxLines`", false) ? number("maxLines", 3) : undefined
+      }
+      color={boolean("Set `color`", true) ? color("color", "") : undefined}
       lineThrough={boolean("lineThrough", false)}
-      nonselectable={boolean("nonselectable", false)}
+      selectable={boolean("selectable", true)}
     >
       {text(
         "children",

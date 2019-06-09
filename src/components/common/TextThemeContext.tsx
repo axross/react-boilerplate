@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 export interface TextTheme {
   color?: string;
-  isNonselectable?: boolean;
+  selectable?: boolean;
 }
 
 const TextThemeContext = createContext<TextTheme>({});

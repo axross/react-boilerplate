@@ -70,7 +70,7 @@ function createTextTheme(color: ButtonColor): TextTheme {
 
   return {
     color: textColor,
-    isNonselectable: true
+    selectable: false
   };
 }
 
