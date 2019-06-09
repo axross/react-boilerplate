@@ -2,13 +2,14 @@ import {
   boolean,
   color,
   number,
+  radios,
   select,
   text,
   withKnobs
 } from "@storybook/addon-knobs";
 import { storiesOf } from "@storybook/react";
 import * as React from "react";
-import Text, { TextHeadingLevel } from "../Text";
+import Text, { TextHeadingLevel, TextAlignment } from "../Text";
 
 storiesOf("Common/Text", module)
   .addDecorator(withKnobs)
@@ -28,6 +29,16 @@ storiesOf("Common/Text", module)
     );
     const isMaxLinesEnable = boolean("Enable `maxLines`", false, "Clamping");
     const maxLines = number("maxLines", 3, {}, "Clamping");
+    const alignment = radios(
+      "alignment (use with the clamping option)",
+      {
+        "TextAlignment.default (inherit)": TextAlignment.default,
+        "TextAlignment.start": TextAlignment.start,
+        "TextAlignment.end": TextAlignment.end,
+        "TextAlignment.center": TextAlignment.center
+      },
+      TextAlignment.default
+    );
     const isColorEnable = boolean("Enable `color`", false, "Color");
     const _color = color("color", "rgba(74, 144, 226, 1)", "Color");
     const selectable = boolean("selectable", true);
@@ -41,6 +52,7 @@ storiesOf("Common/Text", module)
       <Text
         headingLevel={headingLevel}
         maxLines={isMaxLinesEnable ? maxLines : undefined}
+        alignment={alignment}
         color={isColorEnable ? _color : undefined}
         selectable={selectable}
       >
