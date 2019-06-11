@@ -2,16 +2,21 @@ import styled from "@emotion/styled";
 import * as React from "react";
 
 interface Props extends React.Attributes {
+  defaultValue?: string;
   onChange?: (e: React.ChangeEvent, value: string) => void;
   onEnterKeyDown?: (e: React.KeyboardEvent, value: string) => void;
   className?: string;
 }
 
 const TextInput = React.forwardRef<HTMLInputElement, Props>(
-  ({ onChange, onEnterKeyDown, ...props }, ref): React.ReactElement => (
+  (
+    { defaultValue, onChange, onEnterKeyDown, ...props },
+    ref
+  ): React.ReactElement => (
     <Input
       type="text"
       ref={ref}
+      defaultValue={defaultValue}
       onChange={e => onChange && onChange(e, e.currentTarget.value)}
       onKeyDown={e =>
         e.keyCode === 13 &&
@@ -25,8 +30,6 @@ const TextInput = React.forwardRef<HTMLInputElement, Props>(
 
 const Input = styled.input`
   box-sizing: border-box;
-  width: 256px;
-  height: 100%;
   padding: 8px 8px;
   border: 1px #dfe4ea solid;
   border-radius: 3px;

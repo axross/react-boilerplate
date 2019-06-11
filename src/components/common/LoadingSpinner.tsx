@@ -35,6 +35,7 @@ const Bounce = styled.span`
   margin-right: 4px;
   background-color: #dfe4ea;
   border-radius: 50%;
+  vertical-align: top;
   animation: ${animation} 1000ms infinite ease-in-out both;
 
   &:last-child {
