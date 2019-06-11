@@ -14,7 +14,9 @@ function NavigationBar({ title, actions, ...props }: Props) {
     <Root {...props}>
       <_Logo />
 
-      <AppName headingLevel={TextHeadingLevel.h1}>{title}</AppName>
+      <AppName headingLevel={TextHeadingLevel.h1} selectable={false}>
+        {title}
+      </AppName>
 
       <Actions>{actions}</Actions>
     </Root>
