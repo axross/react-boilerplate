@@ -4,7 +4,7 @@ import * as React from "react";
 import DocumentTitle from "../../common/DocumentTitle";
 import NavigationBar from "../../common/NavigationBar";
 import SignOutButton from "../../common/SignOutButton";
-import TaskListRoute from "../../routes/TaskListRoute";
+import PostListRoute from "../../routes/PostListRoute";
 
 function SignedInScene(): React.ReactElement {
   return (
@@ -16,7 +16,7 @@ function SignedInScene(): React.ReactElement {
       <React.Suspense fallback={<span>loading...</span>}>
         <Root>
           <Router>
-            <TaskListRoute path="/" />
+            <PostListRoute path="/" />
           </Router>
         </Root>
       </React.Suspense>
@@ -24,9 +24,6 @@ function SignedInScene(): React.ReactElement {
   );
 }
 
-const Root = styled.div`
-  width: 800px;
-  margin: 0 auto;
-`;
+const Root = styled.div``;
 
 export default SignedInScene;
