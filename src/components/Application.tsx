@@ -1,9 +1,12 @@
+import { LocationProvider } from "@reach/router";
 import * as React from "react";
 import AuthenticationBlocContext from "./blocContexts/AuthenticationBlocContext";
 import GlobalStyle from "./GlobalStyle";
-import SignedInScene from "./scenes/SignedInScene/SignedInScene";
-import SignedOutScene from "./SignedOutScene";
-import SignedScreenSwitcher from "./SignedScreenSwitcher";
+import SignedInRouter from "./SignedInRouter";
+import SignedOutRouter from "./SignedOutRouter";
+import AuthenticationStateRouter from "./AuthenticationStateRouter";
+
+const PostListRoute = React.lazy(() => import("./routes/PostListRoute"));
 
 function Application() {
   const authenticationBloc = React.useContext(AuthenticationBlocContext);
@@ -16,10 +19,20 @@ function Application() {
     <>
       <GlobalStyle />
 
-      <SignedScreenSwitcher
-        renderSignedInChildren={() => <SignedInScene />}
-        renderSignedOutChildren={() => <SignedOutScene />}
-      />
+      <LocationProvider>
+        <AuthenticationStateRouter
+          renderSignedIn={() => (
+            <React.Suspense fallback={<span>Loading...</span>}>
+              <SignedInRouter renderPostList={() => <PostListRoute />} />
+            </React.Suspense>
+          )}
+          renderSignedOut={() => (
+            <React.Suspense fallback={<span>Loading...</span>}>
+              <SignedOutRouter renderPostList={() => <PostListRoute />} />
+            </React.Suspense>
+          )}
+        />
+      </LocationProvider>
     </>
   );
 }
