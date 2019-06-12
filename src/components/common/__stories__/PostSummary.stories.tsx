@@ -9,8 +9,12 @@ storiesOf("Common/PostSummary", module)
   .addDecorator(withKnobs)
   .add("default", () => {
     class _PostId extends PostId {
-      equal(): boolean {
+      equals(): boolean {
         return false;
+      }
+
+      hashCode(): number {
+        return 0;
       }
 
       toString() {
