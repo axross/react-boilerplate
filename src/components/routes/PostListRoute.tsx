@@ -3,6 +3,7 @@ import * as React from "react";
 import PostListBlocContext from "../blocContexts/PostListBlocContext";
 import PostListBlocFactoryContext from "../blocContexts/PostListBlocFactoryContext";
 import AuthenticationBlocContext from "../blocContexts/AuthenticationBlocContext";
+import DocumentBackgroundColor from "../common/DocumentBackgroundColor";
 import DocumentTitle from "../common/DocumentTitle";
 
 const PostListRoute = React.lazy(async () => {
@@ -33,6 +34,8 @@ const PostListRoute = React.lazy(async () => {
     return (
       <>
         <DocumentTitle title="Posts | Clean React" />
+
+        <DocumentBackgroundColor color="#222f3e" />
 
         <PostListBlocContext.Provider value={postListBloc}>
           <PostListPage />
