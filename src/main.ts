@@ -1,6 +1,16 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import Application from "./components/Application";
+import AuthenticationBlocContext from "./components/blocContexts/AuthenticationBlocContext";
+import PostCreateBlocFactoryContext from "./components/blocContexts/PostCreateBlocFactoryContext";
 import PostListBlocFactoryContext from "./components/blocContexts/PostListBlocFactoryContext";
+import AuthenticationApiDummy from "./repositories/AuthenticationApiDummy";
+import SessionLocalStorage from "./repositories/SessionLocalStorage";
+import PostApiDummy from "./repositories/PostApiDummy";
+import AuthenticationBloc from "./usecases/AuthenticationBloc";
+import PostCreateBlocFactory from "./usecases/PostCreateBlocFactory";
+import PostListBlocFactory from "./usecases/PostListBlocFactory";
+import PostListStore from "./repositories/PostListStore";
 
 async function main() {
   const {
@@ -10,29 +20,12 @@ async function main() {
 
   const placeholder = document.createElement("div");
 
-  const [
-    { default: AuthenticationBlocContext },
-    { default: Application },
-    { default: AuthenticationApiDummy },
-    { default: SessionLocalStorage },
-    { default: PostApiDummy },
-    { default: AuthenticationBloc },
-    { default: PostListBlocFactory }
-  ] = await Promise.all([
-    import("./components/blocContexts/AuthenticationBlocContext"),
-    import("./components/Application"),
-    import("./repositories/AuthenticationApiDummy"),
-    import("./repositories/SessionLocalStorage"),
-    import("./repositories/PostApiDummy"),
-    import("./usecases/AuthenticationBloc"),
-    import("./usecases/PostListBlocFactory")
-  ]);
-
   const authenticationApi = new AuthenticationApiDummy();
   const sessionStorable = new SessionLocalStorage({
     keyName: SESSION_STORE_KEY,
     passPhrase: SESSION_ENCRYPTION_KEY
   });
+  const postListStore = new PostListStore();
   const postApi = new PostApiDummy();
 
   const authenticationBloc = new AuthenticationBloc({
@@ -40,9 +33,14 @@ async function main() {
     signable: authenticationApi
   });
 
-  const postListBlocFactory = new PostListBlocFactory({
+  const postCreateBlocFactory = new PostCreateBlocFactory({
     postCreatable: postApi,
-    postListable: postApi
+    postListTemporaryStorable: postListStore
+  });
+
+  const postListBlocFactory = new PostListBlocFactory({
+    postListable: postApi,
+    postListTemporaryStorable: postListStore
   });
 
   document.body.append(placeholder);
@@ -56,9 +54,13 @@ async function main() {
         AuthenticationBlocContext.Provider,
         { value: authenticationBloc },
         React.createElement(
-          PostListBlocFactoryContext.Provider,
-          { value: postListBlocFactory },
-          React.createElement(Application)
+          PostCreateBlocFactoryContext.Provider,
+          { value: postCreateBlocFactory },
+          React.createElement(
+            PostListBlocFactoryContext.Provider,
+            { value: postListBlocFactory },
+            React.createElement(Application)
+          )
         )
       ),
       placeholder

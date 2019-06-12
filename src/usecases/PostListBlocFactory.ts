@@ -1,29 +1,27 @@
 import PostListable from "../behaviors/PostListable";
-import AuthenticationSession from "../entities/AuthenticationSession";
+import PostListTemporaryStorable from "../behaviors/PostListTemporaryStorable";
 import PostListBloc from "./PostListBloc";
-import PostCreatable from "../behaviors/PostCreatable";
 
 class PostListBlocFactory {
   constructor({
-    postCreatable,
-    postListable
+    postListable,
+    postListTemporaryStorable
   }: {
-    postCreatable: PostCreatable;
     postListable: PostListable;
+    postListTemporaryStorable: PostListTemporaryStorable;
   }) {
-    this.postCreatable = postCreatable;
     this.postListable = postListable;
+    this.postListTemporaryStorable = postListTemporaryStorable;
   }
-
-  private readonly postCreatable: PostCreatable;
 
   private readonly postListable: PostListable;
 
-  create({ session }: { session: AuthenticationSession }): PostListBloc {
+  private readonly postListTemporaryStorable: PostListTemporaryStorable;
+
+  create(): PostListBloc {
     return new PostListBloc({
-      session,
-      postCreatable: this.postCreatable,
-      postListable: this.postListable
+      postListable: this.postListable,
+      postListTemporaryStorable: this.postListTemporaryStorable
     });
   }
 }

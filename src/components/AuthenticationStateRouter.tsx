@@ -2,13 +2,12 @@ import * as React from "react";
 import AuthenticationBlocContext from "./blocContexts/AuthenticationBlocContext";
 import ObservableRenderer from "./common/ObservableRenderer";
 
-function SignedScreenSwitcher({
-  renderSignedInChildren,
-  renderSignedOutChildren
-}: {
-  renderSignedInChildren: () => React.ReactElement;
-  renderSignedOutChildren: () => React.ReactElement;
-}): React.ReactElement {
+interface Props {
+  renderSignedIn: () => React.ReactElement;
+  renderSignedOut: () => React.ReactElement;
+}
+
+function AuthenticationStateRouter({ renderSignedIn, renderSignedOut }: Props) {
   const authenticationBloc = React.useContext(AuthenticationBlocContext);
 
   return (
@@ -16,11 +15,9 @@ function SignedScreenSwitcher({
       observable={authenticationBloc.session}
       initialData={authenticationBloc.currentSession}
     >
-      {snapshot =>
-        snapshot.data ? renderSignedInChildren() : renderSignedOutChildren()
-      }
+      {snapshot => (snapshot.data ? renderSignedIn() : renderSignedOut())}
     </ObservableRenderer>
   );
 }
 
-export default SignedScreenSwitcher;
+export default AuthenticationStateRouter;
