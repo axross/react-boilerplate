@@ -18,7 +18,7 @@ interface Values {
   body: string;
 }
 
-function PostCreateForm({
+function NewPostForm({
   defaultTitle = "",
   defaultBody = "",
   validateValues = DEFAULT_VALIDATE_VALUES,
@@ -87,4 +87,4 @@ const SubmitButton = styled(Button)`
   grid-area: submitButton;
 `;
 
-export default PostCreateForm;
+export default NewPostForm;
