@@ -1,6 +1,13 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import Application from "./components/Application";
+import AuthenticationBlocContext from "./components/blocContexts/AuthenticationBlocContext";
 import PostListBlocFactoryContext from "./components/blocContexts/PostListBlocFactoryContext";
+import AuthenticationApiDummy from "./repositories/AuthenticationApiDummy";
+import SessionLocalStorage from "./repositories/SessionLocalStorage";
+import PostApiDummy from "./repositories/PostApiDummy";
+import AuthenticationBloc from "./usecases/AuthenticationBloc";
+import PostListBlocFactory from "./usecases/PostListBlocFactory";
 
 async function main() {
   const {
@@ -9,24 +16,6 @@ async function main() {
   } = (window as any).__config__;
 
   const placeholder = document.createElement("div");
-
-  const [
-    { default: AuthenticationBlocContext },
-    { default: Application },
-    { default: AuthenticationApiDummy },
-    { default: SessionLocalStorage },
-    { default: PostApiDummy },
-    { default: AuthenticationBloc },
-    { default: PostListBlocFactory }
-  ] = await Promise.all([
-    import("./components/blocContexts/AuthenticationBlocContext"),
-    import("./components/Application"),
-    import("./repositories/AuthenticationApiDummy"),
-    import("./repositories/SessionLocalStorage"),
-    import("./repositories/PostApiDummy"),
-    import("./usecases/AuthenticationBloc"),
-    import("./usecases/PostListBlocFactory")
-  ]);
 
   const authenticationApi = new AuthenticationApiDummy();
   const sessionStorable = new SessionLocalStorage({
