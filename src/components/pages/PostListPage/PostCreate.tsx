@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import * as React from "react";
 import PostCreateBlocContext from "../../blocContexts/PostCreateBlocContext";
 import NewPostForm from "../../common/NewPostForm";
-import Text from "../../common/Text";
+import SignInForm from "../../common/SignInForm";
 
 interface Props extends React.Attributes {
   className?: string;
@@ -13,7 +13,7 @@ function PostCreate(props: Props) {
   const [key, setKey] = React.useState(Math.random());
 
   return postCreateBloc ? (
-    <Form
+    <_NewPostForm
       onSubmit={(_, { title, body }) => {
         postCreateBloc.createPost({ title, body });
 
@@ -23,19 +23,17 @@ function PostCreate(props: Props) {
       key={key}
     />
   ) : (
-    <MessageWhenSignedOut {...props}>
-      <Text>Sign in to post</Text>
-    </MessageWhenSignedOut>
+    <_SignInForm {...props} />
   );
 }
 
-const Form = styled(NewPostForm)`
+const _NewPostForm = styled(NewPostForm)`
   padding: 16px;
   background: #2f3c4c;
   border-radius: 8px;
 `;
 
-const MessageWhenSignedOut = styled.div`
+const _SignInForm = styled(SignInForm)`
   padding: 16px;
   background: #2f3c4c;
   border-radius: 8px;

@@ -5,11 +5,11 @@ import Text, { TextHeadingLevel } from "./Text";
 
 interface Props extends React.Attributes {
   title: string;
-  actions: React.ReactElement | React.ReactElement[];
+  actions?: React.ReactElement | React.ReactElement[];
   className?: string;
 }
 
-function NavigationBar({ title, actions, ...props }: Props) {
+function NavigationBar({ title, actions = [], ...props }: Props) {
   return (
     <Root {...props}>
       <_Logo />
