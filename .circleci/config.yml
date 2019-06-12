@@ -22,6 +22,14 @@ jobs:
           root: ~/repo
           paths:
             - .
+  lint:
+    <<: *general_options
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Lint code
+          command: npm run lint
   dry-compile:
     <<: *general_options
     steps:
@@ -75,11 +83,15 @@ workflows:
   default:
     jobs:
       - checkout
+      - lint:
+          requires:
+            - checkout
       - dry-compile:
           requires:
             - checkout
       - build:
           requires:
+            - lint
             - dry-compile
       - deploy-production:
           filters:
@@ -89,6 +101,7 @@ workflows:
             - build
       - build-storybook:
           requires:
+            - lint
             - dry-compile
       - deploy-storybook:
           filters:

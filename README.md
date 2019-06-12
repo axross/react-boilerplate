@@ -55,6 +55,12 @@ $ npm run serve:app
 $ npm run serve:storybook
 ```
 
+### Format code
+
+```
+$ npm run format
+```
+
 ## License
 
 MIT
