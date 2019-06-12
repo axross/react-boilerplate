@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import PostListBlocFactoryContext from "./components/blocContexts/PostListBlocFactoryContext";
 
 async function main() {
   const {
@@ -11,22 +12,20 @@ async function main() {
 
   const [
     { default: AuthenticationBlocContext },
-    { default: TaskListBlocFactoryContext },
     { default: Application },
     { default: AuthenticationApiDummy },
     { default: SessionLocalStorage },
-    { default: TaskApiDummy },
+    { default: PostApiDummy },
     { default: AuthenticationBloc },
-    { default: TaskListBlocFactory }
+    { default: PostListBlocFactory }
   ] = await Promise.all([
     import("./components/blocContexts/AuthenticationBlocContext"),
-    import("./components/blocContexts/TaskListBlocFactoryContext"),
     import("./components/Application"),
     import("./repositories/AuthenticationApiDummy"),
     import("./repositories/SessionLocalStorage"),
-    import("./repositories/TaskApiDummy"),
+    import("./repositories/PostApiDummy"),
     import("./usecases/AuthenticationBloc"),
-    import("./usecases/TaskListBlocFactory")
+    import("./usecases/PostListBlocFactory")
   ]);
 
   const authenticationApi = new AuthenticationApiDummy();
@@ -34,18 +33,16 @@ async function main() {
     keyName: SESSION_STORE_KEY,
     passPhrase: SESSION_ENCRYPTION_KEY
   });
-  const taskApi = new TaskApiDummy();
+  const postApi = new PostApiDummy();
 
   const authenticationBloc = new AuthenticationBloc({
     sessionStorable: sessionStorable,
     signable: authenticationApi
   });
 
-  const taskListBlocFactory = new TaskListBlocFactory({
-    taskCreatable: taskApi,
-    taskDeletable: taskApi,
-    taskListable: taskApi,
-    taskUpdatable: taskApi
+  const postListBlocFactory = new PostListBlocFactory({
+    postCreatable: postApi,
+    postListable: postApi
   });
 
   document.body.append(placeholder);
@@ -57,12 +54,10 @@ async function main() {
     renderFunction(
       React.createElement(
         AuthenticationBlocContext.Provider,
-        {
-          value: authenticationBloc
-        },
+        { value: authenticationBloc },
         React.createElement(
-          TaskListBlocFactoryContext.Provider,
-          { value: taskListBlocFactory },
+          PostListBlocFactoryContext.Provider,
+          { value: postListBlocFactory },
           React.createElement(Application)
         )
       ),
