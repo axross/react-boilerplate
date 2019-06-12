@@ -12,26 +12,20 @@ async function main() {
 
   const [
     { default: AuthenticationBlocContext },
-    { default: TaskListBlocFactoryContext },
     { default: Application },
     { default: AuthenticationApiDummy },
     { default: SessionLocalStorage },
     { default: PostApiDummy },
-    { default: TaskApiDummy },
     { default: AuthenticationBloc },
-    { default: PostListBlocFactory },
-    { default: TaskListBlocFactory }
+    { default: PostListBlocFactory }
   ] = await Promise.all([
     import("./components/blocContexts/AuthenticationBlocContext"),
-    import("./components/blocContexts/TaskListBlocFactoryContext"),
     import("./components/Application"),
     import("./repositories/AuthenticationApiDummy"),
     import("./repositories/SessionLocalStorage"),
     import("./repositories/PostApiDummy"),
-    import("./repositories/TaskApiDummy"),
     import("./usecases/AuthenticationBloc"),
-    import("./usecases/PostListBlocFactory"),
-    import("./usecases/TaskListBlocFactory")
+    import("./usecases/PostListBlocFactory")
   ]);
 
   const authenticationApi = new AuthenticationApiDummy();
@@ -40,7 +34,6 @@ async function main() {
     passPhrase: SESSION_ENCRYPTION_KEY
   });
   const postApi = new PostApiDummy();
-  const taskApi = new TaskApiDummy();
 
   const authenticationBloc = new AuthenticationBloc({
     sessionStorable: sessionStorable,
@@ -50,13 +43,6 @@ async function main() {
   const postListBlocFactory = new PostListBlocFactory({
     postCreatable: postApi,
     postListable: postApi
-  });
-
-  const taskListBlocFactory = new TaskListBlocFactory({
-    taskCreatable: taskApi,
-    taskDeletable: taskApi,
-    taskListable: taskApi,
-    taskUpdatable: taskApi
   });
 
   document.body.append(placeholder);
@@ -72,11 +58,7 @@ async function main() {
         React.createElement(
           PostListBlocFactoryContext.Provider,
           { value: postListBlocFactory },
-          React.createElement(
-            TaskListBlocFactoryContext.Provider,
-            { value: taskListBlocFactory },
-            React.createElement(Application)
-          )
+          React.createElement(Application)
         )
       ),
       placeholder
