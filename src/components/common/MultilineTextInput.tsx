@@ -45,18 +45,19 @@ const TextArea = styled.textarea<{
   height: 100%;
   min-height: calc((1em * 1.5) * ${({ maxLines }) => maxLines} + 16px + 2px);
   padding: 8px 8px;
-  border: 1px #dfe4ea solid;
+  background: #576574;
+  border: none;
   border-radius: 3px;
+  color: #fff;
   font-family: sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  box-shadow: #f1f2f6 0px 0px 0px 1px, #f1f2f6 0px 2px 4px;
   resize: ${({ resize }) => resize};
   outline: none;
   transition: box-shadow 125ms ease-in-out 0ms;
 
   &:focus {
-    box-shadow: #eccc68 0 0 0 3px;
+    box-shadow: #2e86de 0 0 0 2px;
     outline: none;
   }
 `;

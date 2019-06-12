@@ -41,6 +41,7 @@ const _Logo = styled(Logo)`
 
 const AppName = styled(Text)`
   grid-area: title;
+  color: #fff;
   font-size: 20px;
 `;
 

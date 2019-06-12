@@ -42,13 +42,12 @@ const Root = styled.span<{ color: ButtonColor }>`
   padding: 8px 16px;
   background-color: ${({ color }) => BACKGROUND_COLORS.get(color)};
   border-radius: 4px;
-  box-shadow: #f1f2f6 0px 0px 0px 1px, #f1f2f6 0px 2px 4px;
   cursor: pointer;
   transition: box-shadow 125ms ease-in-out 0ms;
 
   &:focus,
   &:active {
-    box-shadow: #eccc68 0 0 0 3px;
+    box-shadow: #2e86de 0 0 0 2px;
   }
 
   &:focus {

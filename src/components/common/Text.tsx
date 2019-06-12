@@ -28,7 +28,7 @@ function Text({
     textTheme.alignment,
     TextAlignment.default
   );
-  const _color = merge(color, textTheme.color, "#2f3542");
+  const _color = merge(color, textTheme.color, "#fff");
   const _selectable = merge(selectable, textTheme.selectable, true);
 
   return (
